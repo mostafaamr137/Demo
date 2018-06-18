@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#125688</color>
+    <color name="colorPrimaryDark">#125688</color>
+    <color name="colorAccent">#f4ff81</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="loginRegistrationBackground">#00bcd4</color>
+    <color name="elevatedYellowButton">#f4ff81</color>
+    <color name="hint_gray">#4dd0e1</color>
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+
+    <color name="bg_screen1">#5e7aa9</color>
+    <color name="bg_screen2">#8cb8c9</color>
+    <color name="bg_screen3">#779ec9</color>
+    <color name="bg_screen4">#b1eeec</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#5e7aa9</color>
+    <color name="dot_dark_screen2">#8cb8c9</color>
+    <color name="dot_dark_screen3">#779ec9</color>
+    <color name="dot_dark_screen4">#b1eeec</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#5e7aa9</color>
+    <color name="dot_light_screen2">#8cb8c9</color>
+    <color name="dot_light_screen3">#779ec9</color>
+    <color name="dot_light_screen4">#b1eeec</color>
+
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
+
+    <color name="bg_msg_you">#5eb964</color>
+    <color name="bg_msg_from">#e5e7eb</color>
+    <color name="lblFromName">#FFF</color>
+    <color name="title_gray">#434343</color>
+    <color name="white">#ffffff</color>
+
+
+</resources>
