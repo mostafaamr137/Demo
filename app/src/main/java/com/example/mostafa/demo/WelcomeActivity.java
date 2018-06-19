@@ -93,8 +93,7 @@ public class WelcomeActivity extends AppCompatActivity {
         layouts = new int[]{
                 R.layout.welcome1,
                 R.layout.welcome2,
-                R.layout.welcome3,
-                R.layout.welcome4
+                R.layout.welcome3
         };
 
         // adding bottom dots

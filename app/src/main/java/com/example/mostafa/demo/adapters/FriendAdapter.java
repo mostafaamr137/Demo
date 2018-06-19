@@ -77,17 +77,15 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final Friends friend = friendsList.get(position);
         holder.title.setText(friend.getUserName());
-        // holder.count.setText(friend.getNumOfSongs() + " songs");
+        holder.count.setText(friend.getEmail());
 
-        //TODO: loading album cover using Glide library
         final Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_WEEK, 7);
 
         String displayPicture = s3.generatePresignedUrl("omessenger-userfiles-mobilehub-792948277/public", friend.getID(), calendar.getTime()).toString();
-        Log.e(TAG, "presignedURL: "+displayPicture );
         Glide.with(mContext)
                 .load(displayPicture)
-                .centerCrop()
+                .placeholder(R.drawable.user)
                 .into(holder.thumbnail);
     }
 

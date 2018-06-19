@@ -9,12 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.mostafa.demo.Interfaces.ApiClient;
 import com.example.mostafa.demo.Interfaces.ConversationsClient;
+import com.example.mostafa.demo.adapters.ConversationsAdapter;
 import com.example.mostafa.demo.models.Conversation;
 import com.example.mostafa.demo.models.Friends;
 
@@ -95,61 +96,41 @@ public class Chats extends AppCompatActivity {
 
     }
 
-    public void retreiveChats(){
-        final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-
-        Log.e(TAG, "retreiveChats: " );
+    public void retreiveChats() {
         ConversationsClient client = ApiClient.getClient().create(ConversationsClient.class);
         Call<List<Conversation>> call = client.getConversations(PreferenceManager.id);
-        Log.e(TAG, "call: " +call.toString());
         call.enqueue(new Callback<List<Conversation>>() {
             @Override
             public void onResponse(Call<List<Conversation>> call, Response<List<Conversation>> response) {
-                Log.e(TAG, "onResponse: code: " + response.code());
-                Log.e(TAG, "onResponse: message: " + response.message());
                 if (response.isSuccessful()) {
-                    PreferenceManager.setConversations(response.body());
-                    if (PreferenceManager.conversations != null) {
-                        Log.e("Homie", String.valueOf(PreferenceManager.conversations.getConversations().size()));
-                        if (PreferenceManager.conversations.getConversations().size() != 0) {
-                            for (Conversation c : PreferenceManager.conversations.getConversations()) {
-                                StringBuilder builder = new StringBuilder();
-                                for (Friends f : c.getUsers()) {
-                                    if (!f.getUserName().equals(PreferenceManager.username)) {
-                                        Log.e(TAG, "Preference: " + PreferenceManager.username);
-                                        Log.e(TAG, "Conversation: " + f.getUserName());
-                                        builder.append(f.getUserName());
-                                        builder.append(" ");
-                                        Log.e(TAG, "Username: " + f.getUserName());
-                                    }
-                                }
-                                stringArrayAdapter.add(builder.toString());
-                                Log.e(TAG, "Builder Value: " + builder.toString());
-                            }
+                    List<Conversation> convos = response.body();
+                    if (convos.size() != 0) {
+                        PreferenceManager.setConversations(convos);
+                        final BaseAdapter adapter = new ConversationsAdapter(response.body(), Chats.this);
 
-                            listView.setAdapter(stringArrayAdapter);
-                            listView.setVisibility(View.VISIBLE);
-                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Intent intent = new Intent(Chats.this, ChatScreen.class);
-                                    intent.putExtra("id", PreferenceManager.conversations.getConversations().get(position).get_id());
-                                    startActivity(intent);
-                                }
-                            });
-                        }
-                    } else {
-                        errorLayout.setVisibility(View.VISIBLE);
+                        listView.setAdapter(adapter);
+                        listView.setVisibility(View.VISIBLE);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = new Intent(Chats.this, ChatScreen.class);
+                                intent.putExtra("id", PreferenceManager.conversations.getConversations().get(position).get_id());
+                                startActivity(intent);
+                            }
+                        });
                     }
+                 else {
+                    errorLayout.setVisibility(View.VISIBLE);
                 }
             }
+        }
 
-            @Override
-            public void onFailure(Call<List<Conversation>> call, Throwable t) {
-                Log.e(TAG, "onFailure: ",t );
-            }
-        });
+        @Override
+        public void onFailure (Call < List < Conversation >> call, Throwable t){
+            Log.e(TAG, "onFailure: ", t);
+        }
+    });
 
 
-    }
+}
 }
